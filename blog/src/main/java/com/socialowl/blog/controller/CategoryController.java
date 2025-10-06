@@ -40,7 +40,8 @@ public class CategoryController {
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> updateCategory(@PathVariable Long id, @Valid @RequestBody CategoryDto categoryDto) {
         try {
-            CategoryDto updatedCategory = categoryService.updateCategory(id, categoryDto);
+            CategoryDto updatedCategory = categoryService.updateCategory(id,
+                    categoryDto);
             return ResponseEntity.ok(updatedCategory);
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());

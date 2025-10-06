@@ -1,9 +1,9 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
-import AuthGuard from "@/components/AuthGuard";
-import PostForm from "@/components/PostForm";
-import { apiService } from "@/lib/api";
+import AuthGuard from "../../../../components/AuthGuard";
+import PostForm from "../../../../components/PostForm";
+import { apiService } from "../../../../lib/api";
 import { Container, CircularProgress, Box, Alert, Button } from "@mui/material";
 import { useRouter } from "next/navigation";
 

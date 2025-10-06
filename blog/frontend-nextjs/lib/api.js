@@ -37,7 +37,26 @@ class ApiService {
       const error = await response.text();
       throw new Error(error || "Request failed");
     }
-    return response.json();
+
+    // For successful DELETE requests with no content, return success
+    if (
+      response.status === 200 &&
+      response.headers.get("Content-Length") === "0"
+    ) {
+      return { success: true };
+    }
+
+    // Try to parse as JSON, but handle empty responses gracefully
+    try {
+      const text = await response.text();
+      return text ? JSON.parse(text) : { success: true };
+    } catch (error) {
+      // If JSON parsing fails but response was successful, return success
+      if (response.ok) {
+        return { success: true };
+      }
+      throw new Error("Failed to parse response");
+    }
   }
 
   // Auth endpoints

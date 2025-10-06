@@ -1,4 +1,3 @@
-
 package com.socialowl.blog.security;
 
 import com.socialowl.blog.service.UserDetailsServiceImpl;

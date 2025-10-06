@@ -11,24 +11,34 @@ import java.util.Collections;
 public class UserPrincipal implements UserDetails {
     private Long id;
     private String email;
+    private String name; // ADD THIS FIELD
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserPrincipal(Long id, String email, String password, Collection<? extends GrantedAuthority> authorities) {
+    // UPDATE CONSTRUCTOR TO INCLUDE NAME
+    public UserPrincipal(Long id, String email, String password, String name,
+            Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.email = email;
         this.password = password;
+        this.name = name; // ADD THIS
         this.authorities = authorities;
     }
 
     public static UserPrincipal create(User user) {
+        // FIX: Ensure role has "ROLE_" prefix
+        String role = user.getRole();
+        String roleWithPrefix = role.startsWith("ROLE_") ? role : "ROLE_" + role;
+
         Collection<GrantedAuthority> authorities = Collections.singletonList(
-                new SimpleGrantedAuthority(user.getRole()));
+                new SimpleGrantedAuthority(roleWithPrefix) // USE THE PREFIXED ROLE
+        );
 
         return new UserPrincipal(
                 user.getId(),
                 user.getEmail(),
                 user.getPasswordHash(),
+                user.getName(), // ADD USER'S NAME
                 authorities);
     }
 
@@ -38,6 +48,11 @@ public class UserPrincipal implements UserDetails {
 
     public String getEmail() {
         return email;
+    }
+
+    // ADD GETTER FOR NAME
+    public String getName() {
+        return name;
     }
 
     @Override

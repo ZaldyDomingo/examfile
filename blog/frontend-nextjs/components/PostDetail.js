@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { apiService } from "@/lib/api";
+import { apiService } from "../lib/api";
 import {
   Container,
   Box,
